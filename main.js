@@ -4,19 +4,47 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 var geometry = new THREE.BoxGeometry( 10, 10, 10);
-var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
-var cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+var group = new THREE.Object3D();s
+var light= new THREE.DirectionalLight(0xffffff,1)
+light.position.x=100
+light.position.y=100
+light.position.z=100
+ao=new THREE.AmbientLight(0xffffff,0.5)
+group.receiveShadow = true
+scene.background = new THREE.Color(0xf2af02);
+scene.add( group );
+scene.add(ao)
+scene.add(light)
 camera.position.z = 105;
 function render() {
     requestAnimationFrame( render );
-    cube.rotation.x =60;
-    cube.rotation.y =45; 
-    cube.position.x+=0.1;
+    group.rotation.x+=0.001
+    group.rotation.y+=0.003
   renderer.render( scene, camera );
 }
 render();
-
+function cubic(gr)
+{
+    for(j=0;j<3;j++)
+{
+    for(i=0;i<9;i++)
+    {   
+        color= 0xffffff
+        if(((i+(j))%2))
+        {
+            color= 0x01010
+        }
+        var material = new THREE.MeshBasicMaterial( { color: color } );
+        var cube = new THREE.Mesh( geometry, material );
+        r=((i))%3
+        c=((i-r))/3
+        cube.position.z=j*10;
+        cube.position.x=10*c;
+        cube.position.y=10*r;
+        group.add(cube)
+    }
+}
+}
 function update() {
     arr = getTimeNow()
     console.log(arr)
@@ -32,7 +60,6 @@ function update() {
     string = string.slice(0, -1);
     clock.innerHTML = string;
 }
-
 function getTimeNow() {
     let date = new Date();
     arr = [date.getHours(), date.getMinutes(), date.getSeconds()];
