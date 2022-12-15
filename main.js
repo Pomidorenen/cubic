@@ -4,7 +4,7 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 var geometry = new THREE.BoxGeometry( 10, 10, 10);
-var group = new THREE.Object3D();s
+var group = new THREE.Object3D();
 var light= new THREE.DirectionalLight(0xffffff,1)
 light.position.x=100
 light.position.y=100
@@ -12,6 +12,7 @@ light.position.z=100
 ao=new THREE.AmbientLight(0xffffff,0.5)
 group.receiveShadow = true
 scene.background = new THREE.Color(0xf2af02);
+cubic()
 scene.add( group );
 scene.add(ao)
 scene.add(light)
@@ -23,7 +24,7 @@ function render() {
   renderer.render( scene, camera );
 }
 render();
-function cubic(gr)
+function cubic()
 {
     for(j=0;j<3;j++)
 {
@@ -44,6 +45,7 @@ function cubic(gr)
         group.add(cube)
     }
 }
+
 }
 function update() {
     arr = getTimeNow()
